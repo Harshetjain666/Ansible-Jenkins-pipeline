@@ -1,0 +1,46 @@
+- name: web-server configure using docker
+  hosts: production
+  gather_facts: no
+  tasks:
+   - name: yum_repository for docker
+     yum_repository:
+           name: dockerrepo
+           description: Configure yum for docker
+           baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+           gpgcheck: no
+   - name: Install docker in RHEL8
+     package:
+           name: "docker-ce-3:18.09.1-3.el7"
+           state: present
+   - name: Start service docker, if not started
+     service:
+           name: docker
+           state: started
+   - name: dependencies for docker
+     pip:
+           name: docker-py
+
+   - name: pull an image
+     docker_image:
+           name: "httpd"
+           source: pull
+           
+    - name: Copy Content
+      copy:
+          src: /root/webserver/
+          dest: /root/webserver/
+          ignore_errors: yes
+       
+   - name: Container present
+     docker_container:
+           name: web-server
+           state: present
+           image: "httpd"
+           ports:
+              - "60:80"
+           volumes:
+              - /root/webserver/:/usr/local/apache2/htdocs/
+
+
+  
+
