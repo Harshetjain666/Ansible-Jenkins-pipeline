@@ -29,7 +29,7 @@
       copy:
           src: /root/webserver/
           dest: /root/webserver/
-          ignore_errors: yes
+      ignore_errors: yes
        
    - name: Container present
      docker_container:
