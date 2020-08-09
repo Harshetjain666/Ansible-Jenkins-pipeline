@@ -25,11 +25,11 @@
            name: "httpd"
            source: pull
            
-    - name: Copy Content
-      copy:
+   - name: Copy Content
+     copy:
           src: /root/webserver/
           dest: /root/webserver/
-      ignore_errors: yes
+     ignore_errors: yes
        
    - name: Container present
      docker_container:
