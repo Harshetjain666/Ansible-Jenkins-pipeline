@@ -34,7 +34,7 @@
    - name: Container present
      docker_container:
            name: web-server
-           state: present
+           state: started
            image: "httpd"
            ports:
               - "60:80"
